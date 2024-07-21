@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="rpc-framework" />
+        <module name="rpc-core" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="atomic-rpc-client" target="17" />
+      <module name="atomic-rpc-common" target="17" />
+      <module name="atomic-rpc-server" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="atomic-rpc" options="" />
+      <module name="atomic-rpc-client" options="-parameters" />
+      <module name="atomic-rpc-common" options="-parameters" />
+      <module name="atomic-rpc-server" options="-parameters" />
+      <module name="rpc-core" options="-parameters" />
+      <module name="rpc-framework" options="-parameters" />
+    </option>
+  </component>
+</project>
