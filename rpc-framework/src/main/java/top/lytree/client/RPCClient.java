@@ -5,11 +5,12 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.lytree.codec.RPCCodec;
 
 public class RPCClient {
     private final static Logger logger = LoggerFactory.getLogger(RPCClient.class);
@@ -34,7 +35,8 @@ public class RPCClient {
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel channel) throws Exception {
-                        channel.pipeline().addLast(new RPCCodec());
+                        channel.pipeline().addLast(new ProtobufEncoder());
+                        channel.pipeline().addLast(new ProtobufDecoder());
                     }
                 });
     }

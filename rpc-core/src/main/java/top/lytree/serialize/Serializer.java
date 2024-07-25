@@ -2,19 +2,21 @@ package top.lytree.serialize;
 
 import top.lytree.serialize.algorithm.SerializerAlgorithm;
 
+import java.io.IOException;
+
 public interface Serializer {
 
     SerializerAlgorithm getSerializerAlgorithm();
 
     /**
      * 编码
-     * @param object
+     * @param obj
      * @return
      */
-    byte[] serialize(Object object);
+    <T> byte[] serialize(T obj) throws IOException;
 
     /**
      * 解码
      */
-    <T> T deserialize(Class<T> clazz, byte[] bytes);
+    <T> T deserialize(Class<T> clazz, byte[] bytes) throws IOException;
 }

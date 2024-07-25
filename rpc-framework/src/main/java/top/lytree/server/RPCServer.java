@@ -1,6 +1,5 @@
 package top.lytree.server;
 
-import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -13,7 +12,6 @@ import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lytree.client.RPCClient;
-import top.lytree.codec.RPCCodec;
 
 
 public class RPCServer {

@@ -1,11 +1,14 @@
 package top.lytree.serialize.algorithm;
 
+import lombok.Getter;
+
+@Getter
 public enum SerializerAlgorithm {
     JSON(Byte.valueOf("1")),
 
-    Proto(Byte.valueOf("2"))
+    Proto(Byte.valueOf("2")),
 
-
+    Hessian(Byte.valueOf("3"))
 
     ;
 
@@ -15,7 +18,4 @@ public enum SerializerAlgorithm {
         this.value = value;
     }
 
-    public Byte getValue() {
-        return value;
-    }
 }
