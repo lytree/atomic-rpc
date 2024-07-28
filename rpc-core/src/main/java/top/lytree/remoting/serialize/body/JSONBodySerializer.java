@@ -1,10 +1,10 @@
-package top.lytree.serialize.impl;
+package top.lytree.remoting.serialize.body;
 
 import top.lytree.json.JSONObject;
-import top.lytree.serialize.Serializer;
-import top.lytree.serialize.algorithm.SerializerAlgorithm;
+import top.lytree.remoting.serialize.BodySerializer;
+import top.lytree.remoting.serialize.algorithm.SerializerAlgorithm;
 
-public class JSONSerializer  implements Serializer {
+public class JSONBodySerializer implements BodySerializer {
     @Override
     public SerializerAlgorithm getSerializerAlgorithm() {
         return SerializerAlgorithm.JSON;

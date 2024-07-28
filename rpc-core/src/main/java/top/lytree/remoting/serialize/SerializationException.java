@@ -1,4 +1,4 @@
-package top.lytree.serialize;
+package top.lytree.remoting.serialize;
 
 public class SerializationException  extends RuntimeException{
 

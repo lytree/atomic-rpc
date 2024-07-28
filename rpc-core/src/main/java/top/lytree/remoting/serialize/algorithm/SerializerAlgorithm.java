@@ -1,4 +1,4 @@
-package top.lytree.serialize.algorithm;
+package top.lytree.remoting.serialize.algorithm;
 
 import lombok.Getter;
 

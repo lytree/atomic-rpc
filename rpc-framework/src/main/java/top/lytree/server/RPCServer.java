@@ -12,6 +12,11 @@ import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lytree.client.RPCClient;
+import top.lytree.remoting.codec.RPCDecoder;
+import top.lytree.remoting.codec.RPCEncoder;
+import top.lytree.remoting.codec.RPCRequestEncoder;
+import top.lytree.remoting.codec.RPCResponseEncoder;
+import top.lytree.remoting.handler.RPCServerHandler;
 
 
 public class RPCServer {
@@ -39,10 +44,14 @@ public class RPCServer {
                 //表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .handler(new ChannelInitializer<NioSocketChannel>() {
+                .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel channel) throws Exception {
-                        channel.pipeline().addLast(new RPCCodec());
+                        channel.pipeline().addLast(new RPCDecoder());
+                        channel.pipeline().addLast(new RPCEncoder());
+                        channel.pipeline().addLast(new RPCRequestEncoder());
+                        channel.pipeline().addLast(new RPCResponseEncoder());
+                        channel.pipeline().addLast(new RPCServerHandler());
                     }
                 });
 
@@ -53,13 +62,18 @@ public class RPCServer {
             // 等待服务端监听端口关闭
             f.channel().closeFuture().sync();
         } catch (Exception e) {
-
+            logger.info("发生异常",e);
         } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
 
         }
 
+    }
+
+    public static void main(String[] args) {
+        RPCServer rpcServer = new RPCServer(8888);
+        rpcServer.run();
     }
 
 }

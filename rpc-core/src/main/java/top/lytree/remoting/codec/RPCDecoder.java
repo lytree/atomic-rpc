@@ -1,9 +1,9 @@
-package top.lytree.codec;
+package top.lytree.remoting.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import top.lytree.protocol.RPCProtocol;
+import top.lytree.remoting.protocol.RPCProtocol;
 
 import java.nio.ByteOrder;
 

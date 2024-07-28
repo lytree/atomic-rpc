@@ -1,10 +1,10 @@
-package top.lytree.serialize;
+package top.lytree.remoting.serialize;
 
-import top.lytree.serialize.algorithm.SerializerAlgorithm;
+import top.lytree.remoting.serialize.algorithm.SerializerAlgorithm;
 
 import java.io.IOException;
 
-public interface Serializer {
+public interface BodySerializer {
 
     SerializerAlgorithm getSerializerAlgorithm();
 

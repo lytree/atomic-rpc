@@ -1,19 +1,17 @@
-package top.lytree.protocol;
+package top.lytree.remoting.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 @Getter
 public class RPCProtocol implements Serializable {
     private final short magic; // 魔数
     private final byte version; // 协议版本号
-    private final byte type; // 数据类型
     private final long requestId; // 请求 ID
-    private final Status status; // 状态
+    private final byte type; // 数据类型
     private final int length; // 数据长度
     private final byte[] body; //数据结构体
 
@@ -22,19 +20,17 @@ public class RPCProtocol implements Serializable {
         this.version = frame.readByte();
         this.type = frame.readByte();
         this.requestId = frame.readLong();
-        this.status = Status.value(frame.readByte());
         this.length = frame.readInt();
         byte[] body = new byte[length];
         frame.readBytes(body);
         this.body = body;
     }
 
-    private RPCProtocol(short magic, byte version, byte type, long requestId, Status status, int length, byte[] body) {
+    private RPCProtocol(short magic, byte version, byte type, long requestId, int length, byte[] body) {
         this.magic = magic;
         this.version = version;
         this.type = type;
         this.requestId = requestId;
-        this.status = status;
         this.length = length;
         this.body = body;
     }
@@ -45,27 +41,13 @@ public class RPCProtocol implements Serializable {
         buffer.writeByte(this.version);
         buffer.writeByte(this.type);
         buffer.writeLong(this.requestId);
-        buffer.writeByte(this.status.status);
         buffer.writeInt(this.length);
         buffer.writeBytes(this.body);
         return buffer;
     }
 
-    public enum Status {
-        UNKNOWN((byte) 0),
-        SUCCESS(Byte.parseByte("1")),
-        TIME_OUT(Byte.parseByte("2")),
-        SERVICE_NOT_FOUND(Byte.parseByte("3")),
-        SYSTEM_ERROR(Byte.parseByte("4"));
-        private final byte status;
-
-        Status(byte status) {
-            this.status = status;
-        }
-
-        public static Status value(Byte status){
-          return   Arrays.stream(Status.values()).filter(s->s.status == status).findFirst().orElse(Status.UNKNOWN);
-        }
+    public static RPCProtocolBuilder neBuilder() {
+        return new RPCProtocolBuilder();
     }
 
 
@@ -74,7 +56,6 @@ public class RPCProtocol implements Serializable {
         private byte version;
         private byte type;
         private long requestId;
-        private Status status;
         private int length;
         private byte[] body;
 
@@ -86,14 +67,10 @@ public class RPCProtocol implements Serializable {
             this.version = other.version;
             this.type = other.type;
             this.requestId = other.requestId;
-            this.status = other.status;
             this.length = other.length;
             this.body = other.body;
         }
 
-        public static RPCProtocolBuilder builder() {
-            return new RPCProtocolBuilder();
-        }
 
         public RPCProtocolBuilder magic(short magic) {
             this.magic = magic;
@@ -115,10 +92,6 @@ public class RPCProtocol implements Serializable {
             return this;
         }
 
-        public RPCProtocolBuilder status(Status status) {
-            this.status = status;
-            return this;
-        }
 
         public RPCProtocolBuilder length(int length) {
             this.length = length;
@@ -131,7 +104,7 @@ public class RPCProtocol implements Serializable {
         }
 
         public RPCProtocol build() {
-            return new RPCProtocol(magic, version, type, requestId, status, length, body);
+            return new RPCProtocol(magic, version, type, requestId, length, body);
         }
     }
 }
