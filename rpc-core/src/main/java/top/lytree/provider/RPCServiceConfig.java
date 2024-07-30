@@ -1,22 +1,25 @@
 package top.lytree.provider;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class RPCServiceConfig {
     /**
      * service version
      */
-    private final String version = "";
+    private  String version = "";
     /**
      * when the interface has multiple implementation classes, distinguish by group
      */
-    private final String group = "";
+    private  String group = "";
 
+    private Integer port = 8888;
     /**
      * target service
      */

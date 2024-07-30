@@ -32,6 +32,11 @@
             <artifactId>protostuff-runtime</artifactId>
             <version>1.7.4</version>
         </dependency>
+        <dependency>
+            <groupId>top.lytree</groupId>
+            <artifactId>atomic-consul</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <defaultGoal>package</defaultGoal>

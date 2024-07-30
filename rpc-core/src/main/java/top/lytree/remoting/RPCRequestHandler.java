@@ -15,8 +15,8 @@ public class RPCRequestHandler {
 
     private final ServiceProvider serviceProvider;
 
-    public RPCRequestHandler() {
-        serviceProvider = new ConsulServiceProviderImpl();
+    public RPCRequestHandler(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
     }
 
     /**
